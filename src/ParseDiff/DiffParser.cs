@@ -32,6 +32,7 @@
                     { @"^new file mode \d+$", NewFile },
                     { @"^deleted file mode \d+$", DeletedFile },
                     { @"^index\s[\da-zA-Z]+\.\.[\da-zA-Z]+(\s(\d+))?$", Index },
+                    { @"^Binary files ", BinaryFile },
                     { @"^---\s", FromFile },
                     { @"^\+\+\+\s", ToFile },
                     { @"^@@\s+\-(\d+),?(\d+)?\s+\+(\d+),?(\d+)?\s@@", Chunk },
@@ -90,6 +91,12 @@
         {
             Restart();
             file.Index = line.Split(' ').Skip(1);
+        }
+
+        private void BinaryFile()
+        {
+            Restart();
+            file.IsBinary = true;
         }
 
         private void FromFile(string line)

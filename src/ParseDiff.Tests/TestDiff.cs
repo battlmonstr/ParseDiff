@@ -297,5 +297,22 @@ index e6a2e28..0000000
             AreEqual("deletedFile.txt", file.From);
             AreEqual("/dev/null", file.To);
         }
+
+        [TestMethod]
+        public void ShouldParseNewBinaryFile()
+        {
+            string diff = @"
+diff --git a/nitrogit-status-diff.png b/nitrogit-status-diff.png
+new file mode 100644
+index 0000000..ccb6117
+Binary files /dev/null and b/nitrogit-status-diff.png differ
+";
+            var files = Diff.Parse(diff, Environment.NewLine).ToArray();
+            AreEqual(1, files.Length);
+            var file = files[0];
+            AreEqual("/dev/null", file.From);
+            AreEqual("nitrogit-status-diff.png", file.To);
+            IsTrue(file.IsBinary);
+        }
     }
 }

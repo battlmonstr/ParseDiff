@@ -24,6 +24,8 @@
 
         public IEnumerable<string> Index { get; internal set; }
 
+        public bool IsBinary { get; internal set; }
+
         private delegate void ParserAction(string line, Match m);
 
         public static IEnumerable<FileDiff> Parse(string input, string lineEnding = "\n")
