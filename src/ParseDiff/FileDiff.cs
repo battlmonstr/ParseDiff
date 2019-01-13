@@ -22,6 +22,9 @@
 
         public bool Add => Type == FileChangeType.Add;
 
+        public string OldPermissions { get; internal set; }
+        public string NewPermissions { get; internal set; }
+
         public IEnumerable<string> Index { get; internal set; }
 
         public bool IsBinary { get; internal set; }

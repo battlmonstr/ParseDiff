@@ -31,6 +31,8 @@
                     { @"^diff\s", Start },
                     { @"^new file mode \d+$", NewFile },
                     { @"^deleted file mode \d+$", DeletedFile },
+                    { @"^old mode \d+$", OldPermissions },
+                    { @"^new mode \d+$", NewPermissions },
                     { @"^index\s[\da-zA-Z]+\.\.[\da-zA-Z]+(\s(\d+))?$", Index },
                     { @"^Binary files ", BinaryFile },
                     { @"^---\s", FromFile },
@@ -85,6 +87,18 @@
             Restart();
             file.Type = FileChangeType.Delete;
             file.To = devnull;
+        }
+
+        private void OldPermissions(string line)
+        {
+            Restart();
+            file.OldPermissions = line.Split(' ').Last();
+        }
+
+        private void NewPermissions(string line)
+        {
+            Restart();
+            file.NewPermissions = line.Split(' ').Last();
         }
 
         private void Index(string line)

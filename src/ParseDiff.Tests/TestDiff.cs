@@ -314,5 +314,27 @@ Binary files /dev/null and b/nitrogit-status-diff.png differ
             AreEqual("nitrogit-status-diff.png", file.To);
             IsTrue(file.IsBinary);
         }
+
+        [TestMethod]
+        public void ShouldParsePermissionsChange()
+        {
+            string diff = @"
+diff --git a/runme.sh b/runme.sh
+old mode 100755
+new mode 100644
+index e69de29..e69de29
+--- a/runme.sh
++++ b/runme.sh
+";
+            var files = Diff.Parse(diff, Environment.NewLine).ToArray();
+            AreEqual(1, files.Length);
+            var file = files[0];
+            AreEqual("runme.sh", file.From);
+            AreEqual("runme.sh", file.To);
+            AreEqual("100755", file.OldPermissions);
+            AreEqual("100644", file.NewPermissions);
+            AreEqual(0, file.Chunks.Count);
+        }
+
     }
 }
